@@ -8,6 +8,8 @@ class App extends Component {
 
 
   render() {
+    console.log(process.env.REACT_APP_AWS_CONFIG);
+    
     return (
       <Switch>
         <Route path='/' exact component={LandingPage} />
