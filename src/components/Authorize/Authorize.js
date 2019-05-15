@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 
 class Authorize extends Component {
 
@@ -14,14 +16,14 @@ class Authorize extends Component {
     if(decision === "logmein") {
       return (
         <div>
-          <h1>LOGIN</h1>
+          <Login />
           <button onClick={this.cancelSelection}>Cancel</button>
         </div>
       )
     } else if(decision === "signmeup") {
       return (
         <div>
-          <h1>SIGNUP</h1>
+          <Signup />
           <button onClick={this.cancelSelection}>Cancel</button>
         </div>
       )
@@ -29,18 +31,11 @@ class Authorize extends Component {
   }
 
   render() {
-    const { decision } = this.state
     return (
       <div>
       <h1>HI</h1>
       <button onClick={this.handleClick} id="logmein">I want to Login</button>
       <button onClick={this.handleClick} id="signmeup">I want to SignUp</button>
-      {/* {decision === "logmein" ? <h1>LOGIN</h1> 
-      :
-      decision === "signmeup" ? <h1>SIGNUP</h1>
-      :
-      null
-       } */}
        {this.displayForm()}
       </div>
     )

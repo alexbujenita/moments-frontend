@@ -1,3 +1,8 @@
 Use axios
 https://github.com/axios/axios
 
+Finish Signup Component
+
+
+DONE
+Login works, returns and saves the jwt into localStorage
