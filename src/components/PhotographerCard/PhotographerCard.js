@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 
 import './PhotographerCard.css'
 
+import instaPic from './insta.png'
+import flickrPic from './flickr.png'
+
 
 class PhotographerCard extends Component {
 
   
 
   render() {
-    const { name, instagram, flickr, avatar, bio } = this.props.photographer
+    const { name, instagram, flickr, avatar } = this.props.photographer
     return (
 <div className="box">
       <div className="card">
@@ -16,7 +19,12 @@ class PhotographerCard extends Component {
             <img src={avatar} alt="images" />
         </div>
         <div className="details">
-            <h2>{name}<br /><span>Director<a href={instagram} target="_blank" ><img alt="insta" src="https://localglimpse.com/wp-content/uploads/2017/03/Instagram.png" /></a></span></h2>
+            <h2>{name}<br /><span>
+            Director
+            <a href={instagram} rel="noopener noreferrer" target="_blank" ><img alt="insta" src={instaPic} /></a>
+            <a href={flickr} rel="noopener noreferrer" target="_blank" ><img alt="flickr" src={flickrPic} /></a>
+            </span>
+            </h2>
         </div>
       </div>
        </div>

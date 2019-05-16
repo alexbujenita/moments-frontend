@@ -9,6 +9,15 @@
   font-family: sans-serif;
 } */
 
+span {
+  width: 10px;
+  height: 10px;
+}
+
+span img {
+  width: 100%;
+}
+
 .box{
   width: 1200px;
   display: grid;
