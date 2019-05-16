@@ -44,7 +44,7 @@ class Login extends Component {
           <input type="password" id="password" value={password} onChange={this.handleChange} />
           <button>Login</button>
         </form>
-        { this.state.error && <h3>Wrong Username or Password</h3> }
+        { this.state.error && <i><h4 style={{color: 'red'}}>Wrong Username or Password. <b>Please try again</b></h4></i> }
       </div>
     )
   }
