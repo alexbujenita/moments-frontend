@@ -1,39 +1,42 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import './PhotographerCard.css'
+import "./PhotographerCard.css";
 
-import instaPic from './insta.png'
-import flickrPic from './flickr.png'
-
+import instaPic from "./insta.png";
+import flickrPic from "./flickr.png";
 
 class PhotographerCard extends Component {
-
-  
-
   render() {
-    const { name, instagram, flickr, avatar } = this.props.photographer
+    const { name, instagram, flickr, avatar } = this.props.photographer;
     return (
-<div className="box">
-      <div className="card">
-        <div className="imgBx">
+      <div className="box">
+        <div className="card">
+          <div className="imgBx">
             <img src={avatar} alt="images" />
-        </div>
-        <div className="details">
-            <h2>{name}<br /><span>
-            Director
-            <a href={instagram} rel="noopener noreferrer" target="_blank" ><img alt="insta" src={instaPic} /></a>
-            <a href={flickr} rel="noopener noreferrer" target="_blank" ><img alt="flickr" src={flickrPic} /></a>
-            </span>
+          </div>
+          <div className="details">
+            <h2>
+              {name}
+              <br />
+              <span>
+                <a href={instagram} rel="noopener noreferrer" target="_blank">
+                  <img alt="insta" src={instaPic} />
+                </a>
+              </span>
+              <span>
+                <a href={flickr} rel="noopener noreferrer" target="_blank">
+                  <img alt="flickr" src={flickrPic} />
+                </a>
+              </span>
             </h2>
+          </div>
         </div>
       </div>
-       </div>
-     )
+    );
   }
 }
 
-
-export default PhotographerCard
+export default PhotographerCard;
 /* 
 <div className='photographer-card'>
         { name && <h2>{name}</h2> }
@@ -44,3 +47,10 @@ export default PhotographerCard
         { avatar && <img src={avatar}  alt="photographer's profile" /> }
         { bio && <i><p>{bio}</p></i> }
       </div> */
+
+// <h2>{name}<br /><span>
+//       Director
+//       <a href={instagram} rel="noopener noreferrer" target="_blank" ><img alt="insta" src={instaPic} /></a>
+//       <a href={flickr} rel="noopener noreferrer" target="_blank" ><img alt="flickr" src={flickrPic} /></a>
+//       </span>
+//       </h2>
