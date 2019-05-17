@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 import "./PhotographerCard.css";
 
@@ -7,12 +8,14 @@ import flickrPic from "./flickr.png";
 
 class PhotographerCard extends Component {
   render() {
-    const { name, instagram, flickr, avatar } = this.props.photographer;
+    const { name, instagram, flickr, avatar, id } = this.props.photographer;
     return (
       <div className="box">
         <div className="card">
           <div className="imgBx">
-            <img src={avatar} alt="images" />
+            <Link to={`/photographer/${id}`}>
+              <img src={avatar} alt="images" />
+            </Link>
           </div>
           <div className="details">
             <h2>
