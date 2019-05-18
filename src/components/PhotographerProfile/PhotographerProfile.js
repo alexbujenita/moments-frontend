@@ -12,10 +12,14 @@ class PhotographerProfile extends Component {
     photographer: {},
     hasAmountPhotos: 0,
     photoName: '',
-    photoCaption: ''
+    photoCaption: '',
+    backId: null
   }
 
   componentDidMount() {
+
+    this.getCurrentUser();
+
     axios.get(`http://localhost:3000/users/${this.props.match.params.id}`)
       .then(resp => {
         this.setState({
@@ -23,6 +27,26 @@ class PhotographerProfile extends Component {
           hasAmountPhotos: resp.data.photos.length
         })
       })
+  }
+
+  getCurrentUser = () => {
+    const token = localStorage.getItem('token')
+    if(token) {
+      fetch('http://localhost:3000/auth/show', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      })
+        .then(resp => resp.json())
+        .then(user => {
+          this.setState({
+            backId: user.user_id
+          })
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   deletePhotoFromBack = id => {
@@ -96,6 +120,9 @@ class PhotographerProfile extends Component {
     return (
       <div className="profile-page">
         { name && <h1>{name}</h1> }
+        <div className="profile-avatar">
+          <img alt="avatar" src={avatar} />
+        </div>
         <div className="profile-photos row">
           { photos && photos.length > 0 
           ?
