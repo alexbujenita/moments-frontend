@@ -38,6 +38,9 @@ class PhotographerProfile extends Component {
   }
 
   showHideButton = () => {
+    if(this.state.backId) {
+      return;
+    }
     return (
       this.state.showContact
       ?
