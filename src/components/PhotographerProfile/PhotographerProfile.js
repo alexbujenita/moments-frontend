@@ -115,6 +115,7 @@ class PhotographerProfile extends Component {
     console.log(this.props);
     console.log(aws());
     const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
+    const { backId } = this.state
     console.log(photos);
     
     return (
@@ -127,11 +128,16 @@ class PhotographerProfile extends Component {
           { photos && photos.length > 0 
           ?
            photos.map(photo => 
-           <ProfilePhoto deletePhotoFromBack={this.deletePhotoFromBack} photo={photo} />) : 'no' }
+           <ProfilePhoto
+            deletePhotoFromBack={this.deletePhotoFromBack}
+            photo={photo}
+            photographerId={id}
+            backId={backId}
+            />) : 'no' }
         </div>
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
-
-        <form onSubmit={this.handleSubmit}>
+{ backId && backId === id &&
+        <form className="photo-uploader" onSubmit={this.handleSubmit}>
           <input type="file" id="file" />
           <label htmlFor="photo-name">
             <input type="text" id="photoName" placeholder="Photo name..." value={this.state.photoName} onChange={this.handleChange} />
@@ -140,7 +146,7 @@ class PhotographerProfile extends Component {
             <input type="text" id="photoCaption" placeholder="Photo caption..." value={this.state.photoCaption} onChange={this.handleChange} />
           </label>
           <button>Upload photo</button>
-        </form>
+        </form> }
 
       </div>
     )
