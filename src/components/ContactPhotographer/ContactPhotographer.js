@@ -1,29 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class ContactPhotographer extends Component {
-
   state = {
-    message: ''
-  }
+    message: ""
+  };
 
   handleChange = event => {
     this.setState({
       message: event.target.value
-    })
-  }
+    });
+  };
 
   sendMessage = event => {
     event.preventDefault();
-    const { message: content } = this.state
-    const { photographerId } = this.props
-    console.log(content + photographerId)
+    const { message: content } = this.state;
+    const { photographerId } = this.props;
+    console.log(content + photographerId);
 
-    if(content.length < 10) {
+    if (content.length < 10) {
       alert("Message has to be at least 10 characters");
       return;
     }
-    fetch('http://localhost:3000/messages', {
-      method: 'POST',
+    fetch("http://localhost:3000/messages", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
@@ -34,18 +33,18 @@ class ContactPhotographer extends Component {
     })
       .then(resp => resp.json())
       .then(conf => {
-        if(conf.ok) {
-          alert('Message sent');
+        if (conf.ok) {
+          alert("Message sent");
           this.setState({
-            message: ''
-          })
+            message: ""
+          });
           this.props.showHideContactForm();
         } else {
-          alert('There was an error, please try again later.')
+          alert("There was an error, please try again later.");
         }
       })
-      .catch(err => console.log(err))
-  }
+      .catch(err => console.log(err));
+  };
 
   render() {
     return (
@@ -59,12 +58,12 @@ class ContactPhotographer extends Component {
             value={this.state.message}
             onChange={this.handleChange}
             maxLength="1000"
-            />
+          />
           <button>Send message</button>
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default ContactPhotographer
+export default ContactPhotographer;

@@ -9,6 +9,7 @@ import aws from '../../secrets.js'
 import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
 
 import './PhotographerProfile.css'
+import Messages from '../Messages/Messages';
 class PhotographerProfile extends Component {
 
   state = {
@@ -29,7 +30,7 @@ class PhotographerProfile extends Component {
         this.setState({
           photographer: resp.data,
           hasAmountPhotos: resp.data.photos.length
-        })
+        }, window.scrollTo(0, 0))
       })
   }
 
@@ -137,7 +138,16 @@ class PhotographerProfile extends Component {
   render() {
     console.log(this.props);
     console.log(aws());
-    const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
+    const { avatar,
+            avatar_filename,
+            bio,
+            email,
+            flickr,
+            id,
+            instagram,
+            name,
+            photos,
+            messages } = this.state.photographer
     const { backId, hasAmountPhotos } = this.state
     console.log(this.state.photographer);
     
@@ -167,6 +177,11 @@ class PhotographerProfile extends Component {
             />) : <h2>No photos to show</h2> }
         </div>
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
+
+          { backId && backId === id && messages &&
+            <Messages messages={messages} />
+          }
+
 { backId && backId === id && hasAmountPhotos < 6 &&
         <form className="photo-uploader" onSubmit={this.handleSubmit}>
           <input type="file" id="file" />
