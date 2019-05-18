@@ -6,6 +6,8 @@ import S3 from 'aws-s3'
 
 import aws from '../../secrets.js'
 
+import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
+
 import './PhotographerProfile.css'
 class PhotographerProfile extends Component {
 
@@ -136,7 +138,7 @@ class PhotographerProfile extends Component {
     console.log(this.props);
     console.log(aws());
     const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
-    const { backId } = this.state
+    const { backId, hasAmountPhotos } = this.state
     console.log(this.state.photographer);
     
     return (
@@ -150,21 +152,22 @@ class PhotographerProfile extends Component {
 
         { name && <h1>{name}</h1> }
         <div className="profile-avatar">
-          <img alt="avatar" src={avatar} />
+          <img alt="avatar" src={avatar ? avatar : placeholderAvatar} />
         </div>
         <div className="profile-photos row">
           { photos && photos.length > 0 
           ?
            photos.map(photo => 
            <ProfilePhoto
+            key={photo.id}
             deletePhotoFromBack={this.deletePhotoFromBack}
             photo={photo}
             photographerId={id}
             backId={backId}
-            />) : 'no' }
+            />) : <h2>No photos to show</h2> }
         </div>
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
-{ backId && backId === id &&
+{ backId && backId === id && hasAmountPhotos < 6 &&
         <form className="photo-uploader" onSubmit={this.handleSubmit}>
           <input type="file" id="file" />
           <label htmlFor="photo-name">
