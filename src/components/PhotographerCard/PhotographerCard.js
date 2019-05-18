@@ -5,6 +5,7 @@ import "./PhotographerCard.css";
 
 import instaPic from "./insta.png";
 import flickrPic from "./flickr.png";
+import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
 
 class PhotographerCard extends Component {
   render() {
@@ -14,7 +15,7 @@ class PhotographerCard extends Component {
         <div className="card">
           <div className="imgBx">
             <Link to={`/photographer/${id}`}>
-              <img src={avatar} alt="images" />
+              <img src={avatar ? avatar : placeholderAvatar} alt="images" />
             </Link>
           </div>
           <div className="details">

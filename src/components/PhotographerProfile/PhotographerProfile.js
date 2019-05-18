@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import ProfilePhoto from '../ProfilePhoto/ProfilePhoto';
+import ContactPhotographer from '../ContactPhotographer/ContactPhotographer';
+import axios from 'axios'
 import S3 from 'aws-s3'
 
 import aws from '../../secrets.js'
 
+import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
+
 import './PhotographerProfile.css'
+import Messages from '../Messages/Messages';
 class PhotographerProfile extends Component {
 
   state = {
@@ -13,7 +17,8 @@ class PhotographerProfile extends Component {
     hasAmountPhotos: 0,
     photoName: '',
     photoCaption: '',
-    backId: null
+    backId: null,
+    showContact: false
   }
 
   componentDidMount() {
@@ -25,8 +30,27 @@ class PhotographerProfile extends Component {
         this.setState({
           photographer: resp.data,
           hasAmountPhotos: resp.data.photos.length
-        })
+        }, window.scrollTo(0, 0))
       })
+  }
+
+  showHideContactForm = () => {
+    this.setState({
+      showContact: !this.state.showContact
+    })
+  }
+
+  showHideButton = () => {
+    if(this.state.backId) {
+      return;
+    }
+    return (
+      this.state.showContact
+      ?
+      <button onClick={this.showHideContactForm}>Cancel</button>
+      :
+      <button onClick={this.showHideContactForm}>Contact photographer</button>
+    )
   }
 
   getCurrentUser = () => {
@@ -114,29 +138,51 @@ class PhotographerProfile extends Component {
   render() {
     console.log(this.props);
     console.log(aws());
-    const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
-    const { backId } = this.state
-    console.log(photos);
+    const { avatar,
+            avatar_filename,
+            bio,
+            email,
+            flickr,
+            id,
+            instagram,
+            name,
+            photos,
+            messages } = this.state.photographer
+    const { backId, hasAmountPhotos } = this.state
+    console.log(this.state.photographer);
     
     return (
       <div className="profile-page">
+        {this.showHideButton()}
+        { this.state.showContact &&
+        <ContactPhotographer
+          photographerId={id}
+          showHideContactForm={this.showHideContactForm}
+          />}
+
         { name && <h1>{name}</h1> }
         <div className="profile-avatar">
-          <img alt="avatar" src={avatar} />
+          <img alt="avatar" src={avatar ? avatar : placeholderAvatar} />
         </div>
         <div className="profile-photos row">
           { photos && photos.length > 0 
           ?
            photos.map(photo => 
            <ProfilePhoto
+            key={photo.id}
             deletePhotoFromBack={this.deletePhotoFromBack}
             photo={photo}
             photographerId={id}
             backId={backId}
-            />) : 'no' }
+            />) : <h2>No photos to show</h2> }
         </div>
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
-{ backId && backId === id &&
+
+          { backId && backId === id && messages &&
+            <Messages messages={messages} />
+          }
+
+{ backId && backId === id && hasAmountPhotos < 6 &&
         <form className="photo-uploader" onSubmit={this.handleSubmit}>
           <input type="file" id="file" />
           <label htmlFor="photo-name">
