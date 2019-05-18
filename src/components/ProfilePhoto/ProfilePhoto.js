@@ -31,6 +31,7 @@ class ProfilePhoto extends Component {
       user_id
     } = this.props.photo;
 
+    const { backId, photographerId } = this.props
     return (
       <div className="profile-photo column">
         <figure>
@@ -40,7 +41,8 @@ class ProfilePhoto extends Component {
           <figcaption>{name}</figcaption>
           <figcaption>{caption}</figcaption>
         </figure>
-        <button onClick={this.deletePhoto}>DEL</button>
+      { backId && backId === photographerId && 
+        <button onClick={this.deletePhoto}>DEL</button>}
       </div>
     );
   }

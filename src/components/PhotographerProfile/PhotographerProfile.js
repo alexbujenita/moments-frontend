@@ -12,10 +12,14 @@ class PhotographerProfile extends Component {
     photographer: {},
     hasAmountPhotos: 0,
     photoName: '',
-    photoCaption: ''
+    photoCaption: '',
+    backId: null
   }
 
   componentDidMount() {
+
+    this.getCurrentUser();
+
     axios.get(`http://localhost:3000/users/${this.props.match.params.id}`)
       .then(resp => {
         this.setState({
@@ -23,6 +27,26 @@ class PhotographerProfile extends Component {
           hasAmountPhotos: resp.data.photos.length
         })
       })
+  }
+
+  getCurrentUser = () => {
+    const token = localStorage.getItem('token')
+    if(token) {
+      fetch('http://localhost:3000/auth/show', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token
+        }
+      })
+        .then(resp => resp.json())
+        .then(user => {
+          this.setState({
+            backId: user.user_id
+          })
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   deletePhotoFromBack = id => {
@@ -91,20 +115,29 @@ class PhotographerProfile extends Component {
     console.log(this.props);
     console.log(aws());
     const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
+    const { backId } = this.state
     console.log(photos);
     
     return (
       <div className="profile-page">
         { name && <h1>{name}</h1> }
+        <div className="profile-avatar">
+          <img alt="avatar" src={avatar} />
+        </div>
         <div className="profile-photos row">
           { photos && photos.length > 0 
           ?
            photos.map(photo => 
-           <ProfilePhoto deletePhotoFromBack={this.deletePhotoFromBack} photo={photo} />) : 'no' }
+           <ProfilePhoto
+            deletePhotoFromBack={this.deletePhotoFromBack}
+            photo={photo}
+            photographerId={id}
+            backId={backId}
+            />) : 'no' }
         </div>
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
-
-        <form onSubmit={this.handleSubmit}>
+{ backId && backId === id &&
+        <form className="photo-uploader" onSubmit={this.handleSubmit}>
           <input type="file" id="file" />
           <label htmlFor="photo-name">
             <input type="text" id="photoName" placeholder="Photo name..." value={this.state.photoName} onChange={this.handleChange} />
@@ -113,7 +146,7 @@ class PhotographerProfile extends Component {
             <input type="text" id="photoCaption" placeholder="Photo caption..." value={this.state.photoCaption} onChange={this.handleChange} />
           </label>
           <button>Upload photo</button>
-        </form>
+        </form> }
 
       </div>
     )
