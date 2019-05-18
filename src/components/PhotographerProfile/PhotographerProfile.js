@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import ProfilePhoto from '../ProfilePhoto/ProfilePhoto';
+import ContactPhotographer from '../ContactPhotographer/ContactPhotographer';
+import axios from 'axios'
 import S3 from 'aws-s3'
 
 import aws from '../../secrets.js'
@@ -13,7 +14,8 @@ class PhotographerProfile extends Component {
     hasAmountPhotos: 0,
     photoName: '',
     photoCaption: '',
-    backId: null
+    backId: null,
+    showContact: false
   }
 
   componentDidMount() {
@@ -27,6 +29,22 @@ class PhotographerProfile extends Component {
           hasAmountPhotos: resp.data.photos.length
         })
       })
+  }
+
+  showHideContactForm = () => {
+    this.setState({
+      showContact: !this.state.showContact
+    })
+  }
+
+  showHideButton = () => {
+    return (
+      this.state.showContact
+      ?
+      <button onClick={this.showHideContactForm}>Cancel</button>
+      :
+      <button onClick={this.showHideContactForm}>Contact photographer</button>
+    )
   }
 
   getCurrentUser = () => {
@@ -116,10 +134,17 @@ class PhotographerProfile extends Component {
     console.log(aws());
     const { avatar, avatar_filename, bio, email, flickr, id, instagram, name, photos } = this.state.photographer
     const { backId } = this.state
-    console.log(photos);
+    console.log(this.state.photographer);
     
     return (
       <div className="profile-page">
+        {this.showHideButton()}
+        { this.state.showContact &&
+        <ContactPhotographer
+          photographerId={id}
+          showHideContactForm={this.showHideContactForm}
+          />}
+
         { name && <h1>{name}</h1> }
         <div className="profile-avatar">
           <img alt="avatar" src={avatar} />
