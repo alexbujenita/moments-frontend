@@ -13,6 +13,7 @@ import flickrPic from "../../assets/media/flickr.png";
 
 import './PhotographerProfile.css';
 import Messages from '../Messages/Messages';
+import Edit from '../Edit/Edit';
 class PhotographerProfile extends Component {
 
   state = {
@@ -21,7 +22,8 @@ class PhotographerProfile extends Component {
     photoName: '',
     photoCaption: '',
     backId: null,
-    showContact: false
+    showContact: false,
+    showEdit: false
   }
 
   componentDidMount() {
@@ -41,6 +43,26 @@ class PhotographerProfile extends Component {
     this.setState({
       showContact: !this.state.showContact
     })
+  }
+
+  showHideEdit = () => {
+    this.setState({
+      showEdit: !this.state.showEdit
+    })
+  }
+
+
+  showHideEditButton = () => {
+    if(this.state.backId  !== this.state.photographer.id) {
+      return;
+    }
+    return (
+      this.state.showEdit
+      ?
+      <button onClick={this.showHideEdit}>Cancel</button>
+      :
+      <button onClick={this.showHideEdit}>Edit Profile</button>
+    )
   }
 
   showHideButton = () => {
@@ -160,7 +182,7 @@ class PhotographerProfile extends Component {
             name,
             photos,
             messages } = this.state.photographer
-    const { backId, hasAmountPhotos } = this.state
+    const { backId, hasAmountPhotos, showEdit } = this.state
     console.log(this.state.photographer);
     
     return (
@@ -207,6 +229,16 @@ class PhotographerProfile extends Component {
           { backId && backId === id && messages &&
             <Messages messages={messages} markAsSeen={this.markAsSeen} />
           }
+          <div>
+
+          { this.showHideEditButton() }
+
+{ backId && backId === id && showEdit &&
+
+          <Edit photographer={this.state.photographer} />
+
+}
+          </div>
 
 { backId && backId === id && hasAmountPhotos < 6 &&
         <form className="photo-uploader" onSubmit={this.handleSubmit}>
