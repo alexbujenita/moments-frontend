@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import "./PhotographerCard.css";
 
-import instaPic from "./insta.png";
-import flickrPic from "./flickr.png";
+import instaPic from "../../assets/media/insta.png";
+import flickrPic from "../../assets/media/flickr.png";
 import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
 
 class PhotographerCard extends Component {
@@ -23,14 +23,14 @@ class PhotographerCard extends Component {
               {name}
               <br />
               <span>
-                <a href={instagram} rel="noopener noreferrer" target="_blank">
+                { instagram && <a href={instagram} rel="noopener noreferrer" target="_blank">
                   <img alt="insta" src={instaPic} />
-                </a>
+                </a>}
               </span>
               <span>
-                <a href={flickr} rel="noopener noreferrer" target="_blank">
+                { flickr && <a href={flickr} rel="noopener noreferrer" target="_blank">
                   <img alt="flickr" src={flickrPic} />
-                </a>
+                </a>}
               </span>
             </h2>
           </div>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import PhotographerCard from "../PhotographerCard/PhotographerCard";
@@ -21,6 +22,9 @@ class Discover extends Component {
     const { photographers } = this.state
     return (
       <div className="discover">
+        <Link to="/">
+          <button>HOME</button>
+        </Link>
         <h1>
           Here will go some information about the page, and also the
           photographer's cards.

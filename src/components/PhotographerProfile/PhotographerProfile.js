@@ -1,14 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import ProfilePhoto from '../ProfilePhoto/ProfilePhoto';
 import ContactPhotographer from '../ContactPhotographer/ContactPhotographer';
-import axios from 'axios'
-import S3 from 'aws-s3'
+import axios from 'axios';
+import S3 from 'aws-s3';
 
-import aws from '../../secrets.js'
+import aws from '../../secrets.js';
 
-import placeholderAvatar from '../../assets/media/placeholder-avatar.gif'
+import placeholderAvatar from '../../assets/media/placeholder-avatar.gif';
+import instaPic from "../../assets/media/insta.png";
+import flickrPic from "../../assets/media/flickr.png";
 
-import './PhotographerProfile.css'
+import './PhotographerProfile.css';
 import Messages from '../Messages/Messages';
 class PhotographerProfile extends Component {
 
@@ -162,6 +165,12 @@ class PhotographerProfile extends Component {
     
     return (
       <div className="profile-page">
+        <Link to="/">
+          <button>HOME</button>
+        </Link>
+        <Link to="/discover">
+          <button>Discover</button>
+        </Link>
         {this.showHideButton()}
         { this.state.showContact &&
         <ContactPhotographer
@@ -172,6 +181,14 @@ class PhotographerProfile extends Component {
         { name && <h1>{name}</h1> }
         <div className="profile-avatar">
           <img alt="avatar" src={avatar ? avatar : placeholderAvatar} />
+          <div className="social-link">
+            { instagram && <a href={instagram} target="_blank" rel="noopener noreferrer">
+              <img alt="Instagram" src={instaPic} />
+            </a>}
+            { flickr && <a href={flickr} target="_blank" rel="noopener noreferrer">
+              <img alt="flickr" src={flickrPic} />
+            </a>}
+          </div>
         </div>
         <div className="profile-photos row">
           { photos && photos.length > 0 
