@@ -1,3 +1,24 @@
 .landing-page {
-  background-image: url(./back.jpeg)
+  background-image: url(./back.jpeg);
+  background-size: cover;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+}
+.navigation {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: baseline;
+}
+.navigation button {
+  padding: 5px 7px;
+  border-radius: 5px;
+  margin-right: 5px;
+  background-color: #008CBA;
+  border-color: #008CBA;
+  height: 25px;
 }

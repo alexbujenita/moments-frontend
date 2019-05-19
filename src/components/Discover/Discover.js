@@ -25,12 +25,14 @@ class Discover extends Component {
           Here will go some information about the page, and also the
           photographer's cards.
         </h1>
-        { photographers.map( photographer => 
-            <PhotographerCard
-            key={photographer.id}
-            photographer={photographer}
-          />
-        )}
+        <div className="photographers">
+          { photographers.map( photographer => 
+              <PhotographerCard
+              key={photographer.id}
+              photographer={photographer}
+            />
+          )}
+        </div>
       </div>
     );
   }

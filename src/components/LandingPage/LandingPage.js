@@ -22,11 +22,13 @@ class LandingPage extends Component {
   render() {
     return (
       <div className="landing-page">
-        {this.logInOut()}
-        <Link to="/discover">
-          <button>Discover</button>
-        </Link>
         <h1 id="title">Moments</h1>
+        <div className="navigation">
+          <Link to="/discover">
+            <button>Discover</button>
+          </Link>
+          {this.logInOut()}
+        </div>
       </div>
     );
   }

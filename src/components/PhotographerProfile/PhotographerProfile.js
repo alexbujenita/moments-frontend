@@ -73,6 +73,15 @@ class PhotographerProfile extends Component {
     }
   }
 
+  markAsSeen = messageId => {
+    axios.get(`http://localhost:3000/messages/${messageId}`)
+      .then(resp => {
+        this.setState({
+          photographer: resp.data
+        })
+      })
+  }
+
   deletePhotoFromBack = id => {
     return fetch(`http://localhost:3000/photos/${id}`, {
       method: 'DELETE',
@@ -179,7 +188,7 @@ class PhotographerProfile extends Component {
         { bio ? <p>{bio}</p> : <h2>NO BIO</h2> }
 
           { backId && backId === id && messages &&
-            <Messages messages={messages} />
+            <Messages messages={messages} markAsSeen={this.markAsSeen} />
           }
 
 { backId && backId === id && hasAmountPhotos < 6 &&
