@@ -38,11 +38,11 @@ class ProfilePhoto extends Component {
           <a href={aws_url} target="_blank" rel="noopener noreferrer">
             <img src={aws_url} alt="From profile" style={{ width: "100%" }} />
           </a>
-          <figcaption>{name}</figcaption>
-          <figcaption>{caption}</figcaption>
+          <figcaption className="caption-name">{name}</figcaption>
+          <figcaption className="caption-description">{caption}</figcaption>
         </figure>
       { backId && backId === photographerId && 
-        <button onClick={this.deletePhoto}>DEL</button>}
+        <button className="delete" type="button" onClick={this.deletePhoto}>DELETE</button>}
       </div>
     );
   }

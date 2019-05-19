@@ -1,5 +1,30 @@
 .column {
   float: left;
-  width: 30%;
+  width: 100%;
   padding: 5px;
+}
+
+.column figure {
+  margin: 0;
+}
+
+@media (min-width: 600px) {
+  .column {
+    width: 47%;
+  }
+}
+
+.delete {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.caption-name {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.caption-description {
+  font-style: italic;
 }
