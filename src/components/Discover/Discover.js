@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import PhotographerCard from "../PhotographerCard/PhotographerCard";
+import './Discover.css';
 
 class Discover extends Component {
   state = {

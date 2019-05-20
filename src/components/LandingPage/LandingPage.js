@@ -28,6 +28,9 @@ class LandingPage extends Component {
             <button>Discover</button>
           </Link>
           {this.logInOut()}
+          <Link to="/about">
+            <button>About</button>
+          </Link>
         </div>
       </div>
     );

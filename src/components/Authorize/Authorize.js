@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import "./Authorize.css";
 
 class Authorize extends Component {
 
@@ -32,11 +33,11 @@ class Authorize extends Component {
 
   render() {
     return (
-      <div>
-      <h1>HI</h1>
-      <button onClick={this.handleClick} id="logmein">I want to Login</button>
-      <button onClick={this.handleClick} id="signmeup">I want to SignUp</button>
-       {this.displayForm()}
+      <div className="authorize">
+        <h1>HI</h1>
+        <button onClick={this.handleClick} id="logmein">I want to Login</button>
+        <button onClick={this.handleClick} id="signmeup">I want to SignUp</button>
+        {this.displayForm()}
       </div>
     )
   }
