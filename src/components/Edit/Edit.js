@@ -30,12 +30,20 @@ class Edit extends Component {
     })
   }
 
+  handleSubmit = event => {
+    event.preventDefault();
+    const { name, email,flickr, instagram, bio } = this.state
+    const { id } = this.state.photographer
+
+    this.props.updateProfile(id, name, email, flickr, instagram, bio);
+  }
+
 
   render() {
     const { name, email, flickr, instagram, bio } = this.state
     return (
       <div className="edit-profile">
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" value={name} onChange={this.handleChange}  />
@@ -56,6 +64,7 @@ class Edit extends Component {
             <label htmlFor="bio">Bio:</label>
             <textarea value={bio} id="bio" rows="4" cols="50" onChange={this.handleChange} ></textarea>
           </div>
+          <button>Submit changes</button>
         </form>
       </div>
     )

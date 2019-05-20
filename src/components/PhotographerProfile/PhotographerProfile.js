@@ -156,6 +156,35 @@ class PhotographerProfile extends Component {
     });
   };
 
+  // EDIT PROFILE
+
+  updateProfile = (id, name, email, flickr, instagram, bio) => {
+
+    fetch("http://localhost:3000/users/edit", {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: id,
+        name,
+        email,
+        flickr,
+        instagram,
+        bio
+      })
+    })
+      .then(resp => resp.json())
+      .then(photographer => {
+        this.setState({
+          photographer,
+          hasAmountPhotos: photographer.photos.length,
+          showEdit: false
+        })
+      })
+  }
+
+
   render() {
     const {
       avatar,
@@ -204,7 +233,10 @@ class PhotographerProfile extends Component {
           {this.showHideEditButton()}
 
           {backId === id && showEdit && (
-            <Edit photographer={this.state.photographer} />
+            <Edit
+                  photographer={this.state.photographer}
+                  updateProfile={this.updateProfile}
+                  />
           )}
         </div>
 
