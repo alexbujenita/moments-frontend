@@ -14,8 +14,9 @@ class AvatarForm extends Component {
       .then(resp => {
         const { key: avatar_filename, location: avatar } = resp;
         this.props.changeAvatar(avatar_filename, avatar);
-
-        S3Client.deleteFile(this.props.oldAvatar);
+        if (this.props.oldAvatar) {
+          S3Client.deleteFile(this.props.oldAvatar);
+        }
       })
   }
 
