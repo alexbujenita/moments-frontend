@@ -27,8 +27,6 @@ class ProfilePhoto extends Component {
       aws_url,
       caption,
       name,
-      id,
-      user_id
     } = this.props.photo;
 
     const { backId, photographerId } = this.props

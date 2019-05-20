@@ -159,9 +159,7 @@ class PhotographerProfile extends Component {
   render() {
     const {
       avatar,
-      avatar_filename,
       bio,
-      email,
       flickr,
       id,
       instagram,
