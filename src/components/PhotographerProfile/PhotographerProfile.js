@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
 import ContactPhotographer from "../ContactPhotographer/ContactPhotographer";
+import AvatarForm from "../AvatarForm/AvatarForm";
+import Messages from "../Messages/Messages";
+import Edit from "../Edit/Edit";
 import axios from "axios";
 import S3 from "aws-s3";
 
@@ -11,8 +14,6 @@ import instaPic from "../../assets/media/insta.png";
 import flickrPic from "../../assets/media/flickr.png";
 
 import "./PhotographerProfile.css";
-import Messages from "../Messages/Messages";
-import Edit from "../Edit/Edit";
 class PhotographerProfile extends Component {
   state = {
     photographer: {},
@@ -21,7 +22,8 @@ class PhotographerProfile extends Component {
     photoCaption: "",
     backId: null,
     showContact: false,
-    showEdit: false
+    showEdit: false,
+    showAvatar: false
   };
 
   componentDidMount() {
@@ -46,6 +48,7 @@ class PhotographerProfile extends Component {
     });
   };
 
+  // EDIT
   showHideEdit = () => {
     this.setState({
       showEdit: !this.state.showEdit
@@ -62,6 +65,49 @@ class PhotographerProfile extends Component {
       <button onClick={this.showHideEdit}>Edit Profile</button>
     );
   };
+  //
+
+  // AVATAR
+showHideAvatar = () => {
+    this.setState({
+      showAvatar: !this.state.showAvatar
+    });
+  };
+
+  showHideAvatarButton = () => {
+    if (this.state.backId !== this.state.photographer.id) {
+      return;
+    }
+    return this.state.showAvatar ? (
+      <button onClick={this.showHideAvatar}>Cancel</button>
+    ) : (
+      <button onClick={this.showHideAvatar}>Edit Avatar</button>
+    );
+  };
+
+  changeAvatar = (avatar_filename, avatar) => {
+    fetch('http://localhost:3000/users/avatar', {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: this.state.photographer.id,
+        avatar_filename,
+        avatar
+      })
+    })
+      .then(resp => resp.json())
+      .then(photographer => {
+        this.setState({
+          photographer,
+          hasAmountPhotos: photographer.photos ? photographer.photos.length : 0,
+          showAvatar: false
+        })
+      })
+  }
+
+  //
 
   showHideButton = () => {
     if (this.state.backId) {
@@ -196,7 +242,7 @@ class PhotographerProfile extends Component {
       photos,
       messages
     } = this.state.photographer;
-    const { backId, hasAmountPhotos, showEdit } = this.state;
+    const { backId, hasAmountPhotos, showEdit, showAvatar } = this.state;
     const showForm = backId && backId === id && hasAmountPhotos < 6;
 
     return (
@@ -239,6 +285,17 @@ class PhotographerProfile extends Component {
                   />
           )}
         </div>
+        
+          {/* CHANGE AVATAR  */}
+        {this.showHideAvatarButton()}
+        { backId === id && showAvatar &&
+         <div>
+          <AvatarForm
+            oldAvatar={this.state.photographer.avatar_filename}
+            changeAvatar={this.changeAvatar}
+            />
+        </div>}
+        
 
           </div>
         </div>
