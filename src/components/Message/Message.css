@@ -1,0 +1,17 @@
+.message {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  border: 2px solid red;
+  border-style: ridge;
+  margin: 5px 0px;
+}
+
+.message-seen {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  border: 2px solid #B2DA63;
+  border-style: solid;
+  margin: 5px 0px;
+}
