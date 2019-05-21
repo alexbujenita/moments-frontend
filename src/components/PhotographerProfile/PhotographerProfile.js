@@ -4,6 +4,7 @@ import ContactPhotographer from "../ContactPhotographer/ContactPhotographer";
 import AvatarForm from "../AvatarForm/AvatarForm";
 import Messages from "../Messages/Messages";
 import Edit from "../Edit/Edit";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import axios from "axios";
 import S3 from "aws-s3";
 
@@ -23,7 +24,8 @@ class PhotographerProfile extends Component {
     backId: null,
     showContact: false,
     showEdit: false,
-    showAvatar: false
+    showAvatar: false,
+    isLoading: false
   };
 
   componentDidMount() {
@@ -41,6 +43,10 @@ class PhotographerProfile extends Component {
         );
       });
   }
+
+  // RANDOM LOADING DURATION
+
+  rangeRandom = (min, max) => Math.random() * (max - min) + min;
 
   showHideContactForm = () => {
     this.setState({
@@ -209,8 +215,8 @@ showHideAvatar = () => {
   // EDIT PROFILE
 
   updateProfile = (id, name, email, flickr, instagram, bio) => {
-
-    fetch("http://localhost:3000/users/edit", {
+    this.setState({isLoading: true})
+    setTimeout( () => fetch("http://localhost:3000/users/edit", {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -229,9 +235,10 @@ showHideAvatar = () => {
         this.setState({
           photographer,
           hasAmountPhotos: photographer.photos.length,
-          showEdit: false
+          showEdit: false,
+          isLoading: false
         })
-      })
+      }), this.rangeRandom(400, 4000))
   }
 
 
@@ -246,11 +253,14 @@ showHideAvatar = () => {
       photos,
       messages
     } = this.state.photographer;
-    const { backId, hasAmountPhotos, showEdit, showAvatar } = this.state;
+    const { backId, hasAmountPhotos, showEdit, showAvatar, isLoading } = this.state;
     const showForm = backId && backId === id && hasAmountPhotos < 6;
 
     return (
-      <div className="profile-page">
+       isLoading ?
+        (<LoadingComponent />)
+        :
+      (<div className="profile-page">
         {this.showHideButton()}
         {this.state.showContact && (
           <ContactPhotographer
@@ -350,7 +360,7 @@ showHideAvatar = () => {
         {backId === id && messages && (
           <Messages messages={messages} markAsSeen={this.markAsSeen} />
         )}
-      </div>
+      </div>)
     );
   }
 }
