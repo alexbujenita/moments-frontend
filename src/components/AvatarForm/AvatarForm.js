@@ -8,6 +8,10 @@ class AvatarForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    if (!event.target.avatarfile.files[0]) {
+      alert('Please select your new avatar');
+      return;
+    }
     const S3Client = new S3(aws());
     
     S3Client.uploadFile(event.target.avatarfile.files[0])
@@ -20,14 +24,13 @@ class AvatarForm extends Component {
       })
   }
 
-
   render() {
     return (
       <form className="avatar-uploader" onSubmit={this.handleSubmit}>
-            <input type="file" id="avatarfile" />
-            <button>Change avatar</button>
-          </form>
-    )
+        <input type="file" id="avatarfile" />
+        <button>Change avatar</button> <br />
+      </form>
+    );
   }
 }
 

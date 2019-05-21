@@ -165,6 +165,10 @@ showHideAvatar = () => {
 
   handleSubmit = event => {
     event.preventDefault();
+    if (!event.target.file.files[0]) {
+      alert('Please select a photo to upload')
+      return;
+    }
     const S3Client = new S3(aws());
 
     const { id: user_id } = this.state.photographer;
