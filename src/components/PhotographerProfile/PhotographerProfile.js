@@ -92,6 +92,7 @@ showHideAvatar = () => {
   };
 
   changeAvatar = (avatar_filename, avatar) => {
+  this.setState({isLoading: true})
     fetch('http://localhost:3000/users/avatar', {
       method: 'PATCH',
       headers: {
@@ -108,7 +109,8 @@ showHideAvatar = () => {
         this.setState({
           photographer,
           hasAmountPhotos: photographer.photos ? photographer.photos.length : 0,
-          showAvatar: false
+          showAvatar: false,
+          isLoading: false
         })
       })
   }
@@ -155,7 +157,8 @@ showHideAvatar = () => {
   };
 
   deletePhotoFromBack = id => {
-    return fetch(`http://localhost:3000/photos/${id}`, {
+    this.setState({isLoading: true})
+    setTimeout(() => fetch(`http://localhost:3000/photos/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" }
     })
@@ -163,10 +166,11 @@ showHideAvatar = () => {
       .then(photographer => {
         this.setState({
           photographer,
-          hasAmountPhotos: photographer.photos.length
+          hasAmountPhotos: photographer.photos.length,
+          isLoading: false
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)), 800)
   };
 
   handleSubmit = event => {
@@ -175,6 +179,7 @@ showHideAvatar = () => {
       alert('Please select a photo to upload')
       return;
     }
+    this.setState({isLoading: true})
     const S3Client = new S3(aws());
 
     const { id: user_id } = this.state.photographer;
@@ -198,7 +203,8 @@ showHideAvatar = () => {
           .then(photographer => {
             this.setState({
               photographer,
-              hasAmountPhotos: photographer.photos.length
+              hasAmountPhotos: photographer.photos.length,
+              isLoading: false
             });
           })
           .catch(err => console.log(err));
@@ -238,7 +244,7 @@ showHideAvatar = () => {
           showEdit: false,
           isLoading: false
         })
-      }), this.rangeRandom(400, 4000))
+      }), this.rangeRandom(400, 2000))
   }
 
 
