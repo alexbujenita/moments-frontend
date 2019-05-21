@@ -305,7 +305,11 @@ showHideAvatar = () => {
         </div>
         {showForm && (
           <form className="photo-uploader" onSubmit={this.handleSubmit}>
-            <input type="file" id="file" />
+            <input
+              type="file"
+              id="file"
+              accept="image/png, image/jpeg, image/gif, image/jpg"
+              />
             <label htmlFor="photo-name">
               <input
                 type="text"

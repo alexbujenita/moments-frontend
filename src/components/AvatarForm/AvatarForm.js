@@ -27,7 +27,11 @@ class AvatarForm extends Component {
   render() {
     return (
       <form className="avatar-uploader" onSubmit={this.handleSubmit}>
-        <input type="file" id="avatarfile" />
+        <input
+          type="file"
+          id="avatarfile"
+          accept="image/png, image/jpeg, image/gif, image/jpg"
+          />
         <button>Change avatar</button> <br />
       </form>
     );
