@@ -4,11 +4,16 @@ import "./Header.css";
 
 export const Header = () => (
   <div className="header">
-     <Link to="/">
-        <p>HOME</p>
+    <Link to="/">
+      <p>HOME</p>
+    </Link>
+    <Link to="/discover">
+      <p>Discover</p>
+    </Link>
+    {localStorage.getItem("token") && (
+      <Link to="/">
+        <p onClick={() => localStorage.clear()}>Logout</p>
       </Link>
-      <Link to="/discover">
-        <p>Discover</p>
-      </Link>
+    )}
   </div>
-)
+);
