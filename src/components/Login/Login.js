@@ -27,7 +27,7 @@ class Login extends Component {
           this.setState({error: true})
         } else {
           localStorage.setItem("token", data.jwt);
-          this.props.history.push('/')
+          this.props.history.push(`/photographer/${data.user_id}`)
         }
       })
       .catch(err => console.log(err))

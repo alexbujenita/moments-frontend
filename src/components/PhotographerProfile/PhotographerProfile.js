@@ -4,6 +4,7 @@ import ContactPhotographer from "../ContactPhotographer/ContactPhotographer";
 import AvatarForm from "../AvatarForm/AvatarForm";
 import Messages from "../Messages/Messages";
 import Edit from "../Edit/Edit";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import axios from "axios";
 import S3 from "aws-s3";
 
@@ -23,7 +24,8 @@ class PhotographerProfile extends Component {
     backId: null,
     showContact: false,
     showEdit: false,
-    showAvatar: false
+    showAvatar: false,
+    isLoading: false
   };
 
   componentDidMount() {
@@ -41,6 +43,10 @@ class PhotographerProfile extends Component {
         );
       });
   }
+
+  // RANDOM LOADING DURATION
+
+  rangeRandom = (min, max) => Math.random() * (max - min) + min;
 
   showHideContactForm = () => {
     this.setState({
@@ -86,6 +92,7 @@ showHideAvatar = () => {
   };
 
   changeAvatar = (avatar_filename, avatar) => {
+  this.setState({isLoading: true})
     fetch('http://localhost:3000/users/avatar', {
       method: 'PATCH',
       headers: {
@@ -102,7 +109,8 @@ showHideAvatar = () => {
         this.setState({
           photographer,
           hasAmountPhotos: photographer.photos ? photographer.photos.length : 0,
-          showAvatar: false
+          showAvatar: false,
+          isLoading: false
         })
       })
   }
@@ -149,7 +157,8 @@ showHideAvatar = () => {
   };
 
   deletePhotoFromBack = id => {
-    return fetch(`http://localhost:3000/photos/${id}`, {
+    this.setState({isLoading: true})
+    setTimeout(() => fetch(`http://localhost:3000/photos/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" }
     })
@@ -157,10 +166,11 @@ showHideAvatar = () => {
       .then(photographer => {
         this.setState({
           photographer,
-          hasAmountPhotos: photographer.photos.length
+          hasAmountPhotos: photographer.photos.length,
+          isLoading: false
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)), 800)
   };
 
   handleSubmit = event => {
@@ -169,6 +179,7 @@ showHideAvatar = () => {
       alert('Please select a photo to upload')
       return;
     }
+    this.setState({isLoading: true})
     const S3Client = new S3(aws());
 
     const { id: user_id } = this.state.photographer;
@@ -192,7 +203,8 @@ showHideAvatar = () => {
           .then(photographer => {
             this.setState({
               photographer,
-              hasAmountPhotos: photographer.photos.length
+              hasAmountPhotos: photographer.photos.length,
+              isLoading: false
             });
           })
           .catch(err => console.log(err));
@@ -209,8 +221,8 @@ showHideAvatar = () => {
   // EDIT PROFILE
 
   updateProfile = (id, name, email, flickr, instagram, bio) => {
-
-    fetch("http://localhost:3000/users/edit", {
+    this.setState({isLoading: true})
+    setTimeout( () => fetch("http://localhost:3000/users/edit", {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
@@ -229,9 +241,10 @@ showHideAvatar = () => {
         this.setState({
           photographer,
           hasAmountPhotos: photographer.photos.length,
-          showEdit: false
+          showEdit: false,
+          isLoading: false
         })
-      })
+      }), this.rangeRandom(400, 2000))
   }
 
 
@@ -246,11 +259,14 @@ showHideAvatar = () => {
       photos,
       messages
     } = this.state.photographer;
-    const { backId, hasAmountPhotos, showEdit, showAvatar } = this.state;
+    const { backId, hasAmountPhotos, showEdit, showAvatar, isLoading } = this.state;
     const showForm = backId && backId === id && hasAmountPhotos < 6;
 
     return (
-      <div className="profile-page">
+       isLoading ?
+        (<LoadingComponent />)
+        :
+      (<div className="profile-page">
         {this.showHideButton()}
         {this.state.showContact && (
           <ContactPhotographer
@@ -350,7 +366,7 @@ showHideAvatar = () => {
         {backId === id && messages && (
           <Messages messages={messages} markAsSeen={this.markAsSeen} />
         )}
-      </div>
+      </div>)
     );
   }
 }
