@@ -18,14 +18,14 @@ class Authorize extends Component {
       return (
         <div>
           <Login />
-          <button onClick={this.cancelSelection}>Cancel</button>
+          <button className="cancelbtn" onClick={this.cancelSelection}>Cancel</button>
         </div>
       )
     } else if(decision === "signmeup") {
       return (
         <div>
           <Signup />
-          <button onClick={this.cancelSelection}>Cancel</button>
+          <button className="cancelbtn" onClick={this.cancelSelection}>Cancel</button>
         </div>
       )
     }
@@ -35,8 +35,11 @@ class Authorize extends Component {
     return (
       <div className="authorize">
         <h1>HI</h1>
-        <button onClick={this.handleClick} id="logmein">I want to Login</button>
-        <button onClick={this.handleClick} id="signmeup">I want to SignUp</button>
+        <h1>HI</h1>
+        <h1>HI</h1>
+        <h1>HI</h1>
+        <button className="green-button" onClick={this.handleClick} id="logmein">I want to Login</button>
+        <button className="green-button" onClick={this.handleClick} id="signmeup">I want to SignUp</button>
         {this.displayForm()}
       </div>
     )

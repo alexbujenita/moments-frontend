@@ -7,5 +7,19 @@ put a icons in PHotcard inline!
 put authorization to work
 
 
+DONE - could be better
+
+Put all the styling for input in Login.css
+/* Full-width inputs */
+input[type=text], input[type=password], input[type=email], textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
 DONE
 Login works, returns and saves the jwt into localStorage

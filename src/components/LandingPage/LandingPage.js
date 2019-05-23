@@ -22,7 +22,7 @@ class LandingPage extends Component {
   render() {
     return (
       <div className="landing-page">
-        <h1 id="title">Moments</h1>
+        <h1 id="title" className="text-flicker-in-glow">Moments</h1>
         <div className="navigation">
           <Link to="/discover">
             <button>Discover</button>
