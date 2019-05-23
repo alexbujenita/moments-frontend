@@ -122,9 +122,9 @@ showHideAvatar = () => {
       return;
     }
     return this.state.showContact ? (
-      <button onClick={this.showHideContactForm}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideContactForm}>Cancel</button>
     ) : (
-      <button onClick={this.showHideContactForm}>Contact photographer</button>
+      <button className="edit-btn" onClick={this.showHideContactForm}>Contact photographer</button>
     );
   };
 

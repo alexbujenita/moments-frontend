@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import './ContactPhotographer.css'
 class ContactPhotographer extends Component {
   state = {
     message: ""
@@ -59,7 +59,9 @@ class ContactPhotographer extends Component {
             onChange={this.handleChange}
             maxLength="1000"
           />
-          <button>Send message</button>
+          <div className="up-container">
+            <button className="edit-btn">Send message</button>
+          </div>
         </form>
       </div>
     );
