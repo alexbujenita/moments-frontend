@@ -24,7 +24,10 @@
 .caption-name {
   font-weight: 900;
   text-transform: uppercase;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.1rem;
 }
 .caption-description {
-  font-style: italic;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1rem;
 }

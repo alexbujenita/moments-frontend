@@ -64,7 +64,9 @@ class Edit extends Component {
             <label htmlFor="bio">Bio:</label>
             <textarea value={bio} id="bio" rows="4" cols="50" onChange={this.handleChange} ></textarea>
           </div>
-          <button>Submit changes</button>
+          <div className="up-container">
+            <button className="edit-btn">Submit changes</button>
+          </div>
         </form>
       </div>
     )

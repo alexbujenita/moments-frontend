@@ -321,7 +321,7 @@ showHideAvatar = () => {
         </div>
         {showForm && (
           <form className="photo-uploader" onSubmit={this.handleSubmit}>
-            <h4>You still have {6-hasAmountPhotos} {hasAmountPhotos === 1 ? 'photo' : 'photos'} to upload</h4>
+            <h4>You still have {6-hasAmountPhotos} {(6-hasAmountPhotos === 1) ? 'photo' : 'photos'} to upload</h4>
             <input
               type="file"
               id="file"

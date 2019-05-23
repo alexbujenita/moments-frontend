@@ -32,7 +32,9 @@ class AvatarForm extends Component {
           id="avatarfile"
           accept="image/png, image/jpeg, image/gif, image/jpg"
           />
-        <button>Change avatar</button> <br />
+          <div className="up-container">
+            <button className="edit-btn">Change avatar</button>
+          </div>
       </form>
     );
   }
