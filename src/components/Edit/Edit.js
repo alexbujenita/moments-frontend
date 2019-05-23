@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './Edit.css'
 
 class Edit extends Component {
 
@@ -60,9 +60,11 @@ class Edit extends Component {
             <label htmlFor="instagram">Instagram account:</label>
             <input type="text" id="instagram" value={instagram} onChange={this.handleChange}  />
           </div>
-          <div>
-            <label htmlFor="bio">Bio:</label>
-            <textarea value={bio} id="bio" rows="4" cols="50" onChange={this.handleChange} ></textarea>
+          <div className="paper">
+            <div className="paper-content">
+              <label htmlFor="bio">Bio:</label>
+              <textarea value={bio} id="bio" rows="4" cols="50" onChange={this.handleChange} ></textarea>
+            </div>
           </div>
           <div className="up-container">
             <button className="edit-btn">Submit changes</button>

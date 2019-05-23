@@ -204,7 +204,9 @@ showHideAvatar = () => {
             this.setState({
               photographer,
               hasAmountPhotos: photographer.photos.length,
-              isLoading: false
+              isLoading: false,
+              photoCaption: '',
+              photoName: ''
             });
           })
           .catch(err => console.log(err));
@@ -321,7 +323,7 @@ showHideAvatar = () => {
         </div>
         {showForm && (
           <form className="photo-uploader" onSubmit={this.handleSubmit}>
-            <h4>You still have {6-hasAmountPhotos} {(6-hasAmountPhotos === 1) ? 'photo' : 'photos'} to upload</h4>
+            <h4>You still have {6-hasAmountPhotos} more {(6-hasAmountPhotos === 1) ? 'photo' : 'photos'} to upload</h4>
             <input
               type="file"
               id="file"
