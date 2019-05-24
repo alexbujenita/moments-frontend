@@ -20,6 +20,7 @@ class Discover extends Component {
     });
   }
 
+
   render() {
     const { photographers, filtered } = this.state
     return (

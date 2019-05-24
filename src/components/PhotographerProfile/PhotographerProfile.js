@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import ProfilePhoto from "../ProfilePhoto/ProfilePhoto";
 import ContactPhotographer from "../ContactPhotographer/ContactPhotographer";
 import AvatarForm from "../AvatarForm/AvatarForm";
@@ -25,7 +26,8 @@ class PhotographerProfile extends Component {
     showContact: false,
     showEdit: false,
     showAvatar: false,
-    isLoading: false
+    isLoading: false,
+    hidden: false
   };
 
   componentDidMount() {
@@ -37,12 +39,24 @@ class PhotographerProfile extends Component {
         this.setState(
           {
             photographer: resp.data,
-            hasAmountPhotos: resp.data.photos.length
+            hasAmountPhotos: resp.data.photos.length,
+            hidden: resp.data.hidden
           },
           window.scrollTo(0, 0)
         );
       });
   }
+
+  // VISIBILITY
+
+  manageVisibility = () => {
+    axios.get(`http://localhost:3000/users/visibility/${this.state.backId}`).then(resp => {
+      this.setState({
+        hidden: !this.state.hidden
+      });
+    });
+  }
+
 
   // RANDOM LOADING DURATION
 
@@ -259,9 +273,9 @@ showHideAvatar = () => {
       instagram,
       name,
       photos,
-      messages
+      messages,
     } = this.state.photographer;
-    const { backId, hasAmountPhotos, showEdit, showAvatar, isLoading } = this.state;
+    const { backId, hasAmountPhotos, showEdit, showAvatar, isLoading, hidden } = this.state;
     const showForm = backId && backId === id && hasAmountPhotos < 6;
 
     return (
@@ -319,8 +333,8 @@ showHideAvatar = () => {
         </div>}
 
         {/* SHOW/HIDE PROFILE */}
-        
-        
+        <p>Hide profile?</p>
+        <input type="checkbox" checked={hidden} onClick={this.manageVisibility} />
 
           </div>
         </div>
@@ -379,4 +393,4 @@ showHideAvatar = () => {
   }
 }
 
-export default PhotographerProfile;
+export default withRouter(PhotographerProfile);

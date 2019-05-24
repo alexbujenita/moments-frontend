@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import "./Authorize.css";
@@ -34,6 +35,7 @@ class Authorize extends Component {
   render() {
     return (
       <div className="authorize">
+      { localStorage.getItem('token') && <Redirect to='/' /> }
         <h1>
             If you already have an account with us, you just need to hit the login button.
         </h1>

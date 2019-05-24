@@ -22,7 +22,6 @@ class ProfilePhoto extends Component {
 
 
   render() {
-    console.log(this.props.photo);
     const {
       aws_url,
       caption,
