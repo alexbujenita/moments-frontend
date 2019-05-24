@@ -1,3 +1,18 @@
+.wrapper {
+  text-align: center;
+}
+
 .about {
   padding-top: 40px;
+  display: inline-block;
+}
+
+.about h2 {
+  margin: 3rem;;
+}
+
+@media (max-width: 600px) {
+  .about h2 {
+    font-size: 0.9rem;
+  }
 }

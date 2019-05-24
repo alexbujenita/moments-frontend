@@ -66,9 +66,9 @@ class PhotographerProfile extends Component {
       return;
     }
     return this.state.showEdit ? (
-      <button onClick={this.showHideEdit}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideEdit}>Cancel</button>
     ) : (
-      <button onClick={this.showHideEdit}>Edit Profile</button>
+      <button className="edit-btn" onClick={this.showHideEdit}>Edit Profile</button>
     );
   };
   //
@@ -85,9 +85,9 @@ showHideAvatar = () => {
       return;
     }
     return this.state.showAvatar ? (
-      <button onClick={this.showHideAvatar}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideAvatar}>Cancel</button>
     ) : (
-      <button onClick={this.showHideAvatar}>Edit Avatar</button>
+      <button className="edit-btn" onClick={this.showHideAvatar}>Edit Avatar</button>
     );
   };
 
@@ -122,9 +122,9 @@ showHideAvatar = () => {
       return;
     }
     return this.state.showContact ? (
-      <button onClick={this.showHideContactForm}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideContactForm}>Cancel</button>
     ) : (
-      <button onClick={this.showHideContactForm}>Contact photographer</button>
+      <button className="edit-btn" onClick={this.showHideContactForm}>Contact photographer</button>
     );
   };
 
@@ -204,7 +204,9 @@ showHideAvatar = () => {
             this.setState({
               photographer,
               hasAmountPhotos: photographer.photos.length,
-              isLoading: false
+              isLoading: false,
+              photoCaption: '',
+              photoName: ''
             });
           })
           .catch(err => console.log(err));
@@ -321,6 +323,7 @@ showHideAvatar = () => {
         </div>
         {showForm && (
           <form className="photo-uploader" onSubmit={this.handleSubmit}>
+            <h4>You still have {6-hasAmountPhotos} more {(6-hasAmountPhotos === 1) ? 'photo' : 'photos'} to upload</h4>
             <input
               type="file"
               id="file"
@@ -344,7 +347,9 @@ showHideAvatar = () => {
                 onChange={this.handleChange}
               />
             </label>
-            <button>Upload photo</button>
+            <div className="up-container">
+              <button className="upload-btn">Upload photo</button>
+            </div>
           </form>
         )}
         <div className="profile-photos">

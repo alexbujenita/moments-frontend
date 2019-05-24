@@ -1,4 +1,9 @@
 .authorize {
-  margin: 0;
+  margin: 0px 8px 0px 8px;
   padding-top: 40px;
+}
+
+.authorize > h1 {
+  color: #264E36;
+  margin: 3.3rem;
 }

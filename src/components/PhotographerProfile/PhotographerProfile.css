@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+
+
+
+#photoCaption {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+}
+
+#photoName {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.6rem;
+}
+
 .profile-page {
   margin: 0 10px;
   padding-top: 40px;
@@ -50,6 +65,7 @@
   display: flex;
   padding: 0 10px;
   flex-direction: column;
+  padding-bottom: 5px;
 }
 
 .social-link > a > img {
@@ -68,4 +84,34 @@
   width: 95%;
   margin: 0 auto;
   padding: 15px 0;
+}
+
+.photo-uploader h4 {
+  margin: 10px;
+  text-align: center;
+}
+
+/* EDIT AND AVATAR AND UPLOAD STYLE */
+.cancel-btn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+}
+
+.edit-btn, .upload-btn {
+  padding: 5px 7px;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  background-color: #008CBA;
+  border-color: #008CBA;
+  height: 25px;
+  color: white;
+}
+
+.up-container {
+  text-align: center;
 }

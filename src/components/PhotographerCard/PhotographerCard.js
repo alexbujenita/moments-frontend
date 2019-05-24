@@ -41,20 +41,3 @@ class PhotographerCard extends Component {
 }
 
 export default PhotographerCard;
-/* 
-<div className='photographer-card'>
-        { name && <h2>{name}</h2> }
-        <p>Instagram:</p>
-        { instagram && <a href={instagram} target='_blank'>insta</a> }
-        <p>Flickr</p>
-        { flickr && <a href={flickr} target='_blank'>Flickr</a> }
-        { avatar && <img src={avatar}  alt="photographer's profile" /> }
-        { bio && <i><p>{bio}</p></i> }
-      </div> */
-
-// <h2>{name}<br /><span>
-//       Director
-//       <a href={instagram} rel="noopener noreferrer" target="_blank" ><img alt="insta" src={instaPic} /></a>
-//       <a href={flickr} rel="noopener noreferrer" target="_blank" ><img alt="flickr" src={flickrPic} /></a>
-//       </span>
-//       </h2>

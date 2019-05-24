@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import axios from 'axios'
 
+import './Login.css'
+
 class Login extends Component {
 
   state = {
@@ -22,7 +24,6 @@ class Login extends Component {
     axios.post('http://localhost:3000/auth/create', this.state)
       .then(resp => {
         const { data } = resp
-        console.log(data)
         if(data.error) {
           this.setState({error: true})
         } else {
@@ -36,13 +37,13 @@ class Login extends Component {
   render() {
     const { email, password } = this.state
     return (
-      <div>
+      <div className="login-form">
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="email">Email:</label>
           <input type="text" id="email" value={email} onChange={this.handleChange} />
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" value={password} onChange={this.handleChange} />
-          <button>Login</button>
+          <button className="green-button">Login</button>
         </form>
         { this.state.error && <i><h4 style={{color: 'red'}}>Wrong Username or Password. <b>Please try again</b></h4></i> }
       </div>
