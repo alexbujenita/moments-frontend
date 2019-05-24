@@ -24,7 +24,6 @@ class Login extends Component {
     axios.post('http://localhost:3000/auth/create', this.state)
       .then(resp => {
         const { data } = resp
-        console.log(data)
         if(data.error) {
           this.setState({error: true})
         } else {

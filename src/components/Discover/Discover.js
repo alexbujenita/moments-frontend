@@ -6,20 +6,22 @@ import './Discover.css';
 
 class Discover extends Component {
   state = {
-    photographers: []
+    photographers: [],
+    filtered: []
   };
 
   componentDidMount() {
     axios.get("http://localhost:3000/users/all").then(resp => {
       const { data: photographers } = resp;
       this.setState({
-        photographers
+        photographers,
+        filtered: photographers.filter( p => !p.hidden )
       });
     });
   }
 
   render() {
-    const { photographers } = this.state
+    const { photographers, filtered } = this.state
     return (
       <div className="discover">
         <h1>
@@ -27,7 +29,7 @@ class Discover extends Component {
           photographer's cards.
         </h1>
         <div className="photographers">
-          { photographers.map( photographer => 
+          { filtered.map( photographer => 
               <PhotographerCard
               key={photographer.id}
               photographer={photographer}
