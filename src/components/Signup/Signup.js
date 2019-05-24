@@ -48,11 +48,26 @@ class Signup extends React.Component {
           <label htmlFor="name">Name:</label>
           <input type="text" id="namesign" onChange={this.handleChange} />
           <label htmlFor="email">Email:</label>
-          <input type="email" id="emailsign" onChange={this.handleChange} />
+          <input
+            type="email"
+            id="emailsign"
+            autoComplete="username"
+            onChange={this.handleChange}
+          />
           <label htmlFor="password">Password:</label>
-          <input type="password" id="passwordsign" onChange={this.handleChange} />
+          <input
+            type="password"
+            id="passwordsign"
+            autoComplete="current-password"
+            onChange={this.handleChange}
+          />
           <label htmlFor="passconf">Password confirmation:</label>
-          <input type="password" id="passconf" onChange={this.handleChange} />
+          <input
+            type="password"
+            id="passconf"
+            autoComplete="new-password"
+            onChange={this.handleChange}
+          />
           <button className="green-button">Create account</button>
         </form>
       </div>

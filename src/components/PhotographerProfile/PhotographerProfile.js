@@ -333,8 +333,10 @@ showHideAvatar = () => {
         </div>}
 
         {/* SHOW/HIDE PROFILE */}
+        {backId === id && <div className="privacy">
         <p>Hide profile?</p>
         <input type="checkbox" checked={hidden} onClick={this.manageVisibility} />
+        </div>}
 
           </div>
         </div>

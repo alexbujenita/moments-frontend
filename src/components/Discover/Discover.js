@@ -6,7 +6,6 @@ import './Discover.css';
 
 class Discover extends Component {
   state = {
-    photographers: [],
     filtered: []
   };
 
@@ -14,7 +13,6 @@ class Discover extends Component {
     axios.get("http://localhost:3000/users/all").then(resp => {
       const { data: photographers } = resp;
       this.setState({
-        photographers,
         filtered: photographers.filter( p => !p.hidden )
       });
     });
@@ -22,7 +20,7 @@ class Discover extends Component {
 
 
   render() {
-    const { photographers, filtered } = this.state
+    const { filtered } = this.state
     return (
       <div className="discover">
         <h1>
