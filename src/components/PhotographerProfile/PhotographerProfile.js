@@ -317,6 +317,9 @@ showHideAvatar = () => {
             changeAvatar={this.changeAvatar}
             />
         </div>}
+
+        {/* SHOW/HIDE PROFILE */}
+        
         
 
           </div>
