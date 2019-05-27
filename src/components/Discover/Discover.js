@@ -24,8 +24,7 @@ class Discover extends Component {
     return (
       <div className="discover">
         <h1>
-          Here will go some information about the page, and also the
-          photographer's cards.
+          Meet our photographers
         </h1>
         <div className="photographers">
           { filtered.map( photographer => 
