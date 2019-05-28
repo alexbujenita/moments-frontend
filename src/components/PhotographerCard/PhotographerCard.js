@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import "./PhotographerCard.css";
 
@@ -40,4 +40,4 @@ class PhotographerCard extends Component {
   }
 }
 
-export default PhotographerCard;
+export default withRouter(PhotographerCard);

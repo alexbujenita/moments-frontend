@@ -6,7 +6,6 @@ import './Discover.css';
 
 class Discover extends Component {
   state = {
-    photographers: [],
     filtered: []
   };
 
@@ -14,19 +13,18 @@ class Discover extends Component {
     axios.get("http://localhost:3000/users/all").then(resp => {
       const { data: photographers } = resp;
       this.setState({
-        photographers,
         filtered: photographers.filter( p => !p.hidden )
       });
     });
   }
 
+
   render() {
-    const { photographers, filtered } = this.state
+    const { filtered } = this.state
     return (
       <div className="discover">
         <h1>
-          Here will go some information about the page, and also the
-          photographer's cards.
+          Meet our photographers
         </h1>
         <div className="photographers">
           { filtered.map( photographer => 

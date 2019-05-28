@@ -1,46 +1,56 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link, withRouter } from "react-router-dom";
 import "./Header.css";
-
-// async function getUserId(token) {
-//   const userId = await fetch('http://localhost:3000/auth/show', {
-//     method: 'GET',
-//     headers: {'Authorization': token}
-//   })
-//     .then(r => r.json())
-//     .then(u => {
-//     return  u.user_id
-//     })
-//     console.log(userId);
-    
-//   return userId
-// }
-
 
 function getToken() {
   return localStorage.getItem("token");
 }
 
-export const Header = () => (
+class Header extends React.Component {
+  state = {
+    userId: null
+  };
 
-  <div className="header">
-    <Link to="/">
-      <p>HOME</p>
-    </Link>
-    <Link to="/discover">
-      <p>Discover</p>
-    </Link>
-    {getToken() && (
-      <Link to="/">
-        <p onClick={() => localStorage.clear()}>Logout</p>
-      </Link>
-    )}
+  componentDidMount() {
+    const token = this.getToken();
+    if (token) {
+      fetch("http://localhost:3000/auth/show", {
+        method: "GET",
+        headers: { Authorization: token }
+      })
+        .then(r => r.json())
+        .then(u => this.setState({ userId: u.user_id }));
+    }
+  }
+  getToken = () => localStorage.getItem("token");
 
-    {/* { getToken() && (
-      <Link to={`/photographer/${getUserId(getToken())}`}>
+  render() {
+    return (
+      <div className="header">
+        <Link to="/">
+          <p>HOME</p>
+        </Link>
+        <Link to="/discover">
+          <p>Discover</p>
+        </Link>
+        {getToken() && (
+          <Link to="/">
+            <p onClick={() => localStorage.clear()}>Logout</p>
+          </Link>
+        )}
+
+        { getToken() && (
+      <NavLink
+        exact
+        to={`/photographer/${this.state.userId}`}
+        activeStyle={{color:"red"}}
+        >
         <p>My Profile</p>
-      </Link>
-    ) } */}
+      </NavLink>
+    ) }
+      </div>
+    );
+  }
+}
 
-  </div>
-);
+export default withRouter(Header)
