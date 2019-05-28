@@ -43,9 +43,9 @@ class Authorize extends Component {
           Otherwise why don't you create an account with us!? <br />
           It's free at the moment, so hurry up!
         </h1>
+        {this.displayForm()}
         <button className="green-button" onClick={this.handleClick} id="logmein">I want to Login</button>
         <button className="green-button" onClick={this.handleClick} id="signmeup">I want to SignUp</button>
-        {this.displayForm()}
       </div>
     )
   }

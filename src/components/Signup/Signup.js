@@ -1,7 +1,6 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import axios from "axios";
-
 
 class Signup extends React.Component {
   constructor(props) {
@@ -37,7 +36,12 @@ class Signup extends React.Component {
       alert("The password and the confirmation don't match");
     } else {
       axios
-        .post("http://localhost:3000/users/create", { name, email, password, hidden })
+        .post("http://localhost:3000/users/create", {
+          name,
+          email,
+          password,
+          hidden
+        })
         .then(resp => {
           localStorage.setItem("token", resp.data.jwt);
           this.props.history.push("/");
@@ -52,11 +56,20 @@ class Signup extends React.Component {
       <div className="signup-form">
         <form onSubmit={this.createUserAccount}>
           <label htmlFor="name">Name:</label>
-          <input type="text" id="namesign" onChange={this.handleChange} />
+          <input
+            type="text"
+            id="namesign"
+            placeholder="Enter your name..."
+            required
+            minLength="3"
+            onChange={this.handleChange}
+          />
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="emailsign"
+            placeholder="Enter your email..."
+            required
             autoComplete="username"
             onChange={this.handleChange}
           />
@@ -65,6 +78,8 @@ class Signup extends React.Component {
             type="password"
             id="passwordsign"
             autoComplete="current-password"
+            required
+            minLength="3"
             onChange={this.handleChange}
           />
           <label htmlFor="passconf">Password confirmation:</label>
@@ -72,9 +87,11 @@ class Signup extends React.Component {
             type="password"
             id="passconf"
             autoComplete="new-password"
+            required
+            minLength="3"
             onChange={this.handleChange}
           />
-          <p>Hide account upon creation?</p>
+          <span>Hide account upon creation?</span>
           <input
             type="checkbox"
             checked={hideProfile}
