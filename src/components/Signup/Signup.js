@@ -1,5 +1,7 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 import axios from "axios";
+
 
 class Signup extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class Signup extends React.Component {
       namesign: "",
       emailsign: "",
       passwordsign: "",
-      passconf: ""
+      passconf: "",
+      hideProfile: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.createUserAccount = this.createUserAccount.bind(this);
@@ -25,7 +28,8 @@ class Signup extends React.Component {
       passwordsign: password,
       passconf: conf,
       namesign: name,
-      emailsign: email
+      emailsign: email,
+      hideProfile: hidden
     } = this.state;
     event.preventDefault();
 
@@ -33,15 +37,17 @@ class Signup extends React.Component {
       alert("The password and the confirmation don't match");
     } else {
       axios
-        .post("http://localhost:3000/users/create", { name, email, password })
+        .post("http://localhost:3000/users/create", { name, email, password, hidden })
         .then(resp => {
           localStorage.setItem("token", resp.data.jwt);
+          this.props.history.push("/");
         })
         .catch(err => console.log(err));
     }
   }
 
   render() {
+    const { hideProfile } = this.state;
     return (
       <div className="signup-form">
         <form onSubmit={this.createUserAccount}>
@@ -68,6 +74,12 @@ class Signup extends React.Component {
             autoComplete="new-password"
             onChange={this.handleChange}
           />
+          <p>Hide account upon creation?</p>
+          <input
+            type="checkbox"
+            checked={hideProfile}
+            onChange={() => this.setState({ hideProfile: !hideProfile })}
+          />
           <button className="green-button">Create account</button>
         </form>
       </div>
@@ -75,4 +87,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
