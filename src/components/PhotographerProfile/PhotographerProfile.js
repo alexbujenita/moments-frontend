@@ -31,6 +31,7 @@ class PhotographerProfile extends Component {
   };
 
   componentDidMount() {
+
     this.getCurrentUser();
 
     axios
@@ -41,8 +42,15 @@ class PhotographerProfile extends Component {
             photographer: resp.data,
             hasAmountPhotos: resp.data.photos.length,
             hidden: resp.data.hidden
-          },
-          window.scrollTo(0, 0)
+          }, () => {
+            window.scrollTo(0, 0);
+            setTimeout(() =>{
+              if(resp.data.hidden && this.state.backId !== this.state.photographer.id ) {
+                this.props.history.push("/discover")
+              }
+
+            }, 150 )
+          }
         );
       });
   }
@@ -50,13 +58,14 @@ class PhotographerProfile extends Component {
   // VISIBILITY
 
   manageVisibility = () => {
-    axios.get(`http://localhost:3000/users/visibility/${this.state.backId}`).then(resp => {
-      this.setState({
-        hidden: !this.state.hidden
+    axios
+      .get(`http://localhost:3000/users/visibility/${this.state.backId}`)
+      .then(resp => {
+        this.setState({
+          hidden: !this.state.hidden
+        });
       });
-    });
-  }
-
+  };
 
   // RANDOM LOADING DURATION
 
@@ -80,15 +89,19 @@ class PhotographerProfile extends Component {
       return;
     }
     return this.state.showEdit ? (
-      <button className="cancel-btn" onClick={this.showHideEdit}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideEdit}>
+        Cancel
+      </button>
     ) : (
-      <button className="edit-btn" onClick={this.showHideEdit}>Edit Profile</button>
+      <button className="edit-btn" onClick={this.showHideEdit}>
+        Edit Profile
+      </button>
     );
   };
   //
 
   // AVATAR
-showHideAvatar = () => {
+  showHideAvatar = () => {
     this.setState({
       showAvatar: !this.state.showAvatar
     });
@@ -99,18 +112,22 @@ showHideAvatar = () => {
       return;
     }
     return this.state.showAvatar ? (
-      <button className="cancel-btn" onClick={this.showHideAvatar}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideAvatar}>
+        Cancel
+      </button>
     ) : (
-      <button className="edit-btn" onClick={this.showHideAvatar}>Edit Avatar</button>
+      <button className="edit-btn" onClick={this.showHideAvatar}>
+        Edit Avatar
+      </button>
     );
   };
 
   changeAvatar = (avatar_filename, avatar) => {
-  this.setState({isLoading: true})
-    fetch('http://localhost:3000/users/avatar', {
-      method: 'PATCH',
+    this.setState({ isLoading: true });
+    fetch("http://localhost:3000/users/avatar", {
+      method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         user_id: this.state.photographer.id,
@@ -125,9 +142,9 @@ showHideAvatar = () => {
           hasAmountPhotos: photographer.photos ? photographer.photos.length : 0,
           showAvatar: false,
           isLoading: false
-        })
-      })
-  }
+        });
+      });
+  };
 
   //
 
@@ -136,9 +153,13 @@ showHideAvatar = () => {
       return;
     }
     return this.state.showContact ? (
-      <button className="cancel-btn" onClick={this.showHideContactForm}>Cancel</button>
+      <button className="cancel-btn" onClick={this.showHideContactForm}>
+        Cancel
+      </button>
     ) : (
-      <button className="edit-btn" onClick={this.showHideContactForm}>Contact photographer</button>
+      <button className="edit-btn" onClick={this.showHideContactForm}>
+        Contact photographer
+      </button>
     );
   };
 
@@ -157,6 +178,7 @@ showHideAvatar = () => {
           this.setState({
             backId: user.user_id
           });
+          return user.user_id
         })
         .catch(err => console.log(err));
     }
@@ -171,29 +193,33 @@ showHideAvatar = () => {
   };
 
   deletePhotoFromBack = id => {
-    this.setState({isLoading: true})
-    setTimeout(() => fetch(`http://localhost:3000/photos/${id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(resp => resp.json())
-      .then(photographer => {
-        this.setState({
-          photographer,
-          hasAmountPhotos: photographer.photos.length,
-          isLoading: false
-        });
-      })
-      .catch(err => console.log(err)), 800)
+    this.setState({ isLoading: true });
+    setTimeout(
+      () =>
+        fetch(`http://localhost:3000/photos/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" }
+        })
+          .then(resp => resp.json())
+          .then(photographer => {
+            this.setState({
+              photographer,
+              hasAmountPhotos: photographer.photos.length,
+              isLoading: false
+            });
+          })
+          .catch(err => console.log(err)),
+      800
+    );
   };
 
   handleSubmit = event => {
     event.preventDefault();
     if (!event.target.file.files[0]) {
-      alert('Please select a photo to upload')
+      alert("Please select a photo to upload");
       return;
     }
-    this.setState({isLoading: true})
+    this.setState({ isLoading: true });
     const S3Client = new S3(aws());
 
     const { id: user_id } = this.state.photographer;
@@ -219,8 +245,8 @@ showHideAvatar = () => {
               photographer,
               hasAmountPhotos: photographer.photos.length,
               isLoading: false,
-              photoCaption: '',
-              photoName: ''
+              photoCaption: "",
+              photoName: ""
             });
           })
           .catch(err => console.log(err));
@@ -237,32 +263,35 @@ showHideAvatar = () => {
   // EDIT PROFILE
 
   updateProfile = (id, name, email, flickr, instagram, bio) => {
-    this.setState({isLoading: true})
-    setTimeout( () => fetch("http://localhost:3000/users/edit", {
-      method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: id,
-        name,
-        email,
-        flickr,
-        instagram,
-        bio
-      })
-    })
-      .then(resp => resp.json())
-      .then(photographer => {
-        this.setState({
-          photographer,
-          hasAmountPhotos: photographer.photos.length,
-          showEdit: false,
-          isLoading: false
+    this.setState({ isLoading: true });
+    setTimeout(
+      () =>
+        fetch("http://localhost:3000/users/edit", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user_id: id,
+            name,
+            email,
+            flickr,
+            instagram,
+            bio
+          })
         })
-      }), this.rangeRandom(400, 2000))
-  }
-
+          .then(resp => resp.json())
+          .then(photographer => {
+            this.setState({
+              photographer,
+              hasAmountPhotos: photographer.photos.length,
+              showEdit: false,
+              isLoading: false
+            });
+          }),
+      this.rangeRandom(400, 2000)
+    );
+  };
 
   render() {
     const {
@@ -273,16 +302,22 @@ showHideAvatar = () => {
       instagram,
       name,
       photos,
-      messages,
+      messages
     } = this.state.photographer;
-    const { backId, hasAmountPhotos, showEdit, showAvatar, isLoading, hidden } = this.state;
+    const {
+      backId,
+      hasAmountPhotos,
+      showEdit,
+      showAvatar,
+      isLoading,
+      hidden
+    } = this.state;
     const showForm = backId && backId === id && hasAmountPhotos < 6;
 
-    return (
-       isLoading ?
-        (<LoadingComponent />)
-        :
-      (<div className="profile-page">
+    return isLoading ? (
+      <LoadingComponent />
+    ) : (
+      <div className="profile-page">
         {this.showHideButton()}
         {this.state.showContact && (
           <ContactPhotographer
@@ -312,42 +347,51 @@ showHideAvatar = () => {
               )}
             </div>
             <div>
-          {this.showHideEditButton()}
+              {this.showHideEditButton()}
 
-          {backId === id && showEdit && (
-            <Edit
+              {backId === id && showEdit && (
+                <Edit
                   photographer={this.state.photographer}
                   updateProfile={this.updateProfile}
-                  />
-          )}
-        </div>
-        
-          {/* CHANGE AVATAR  */}
-        {this.showHideAvatarButton()}
-        { backId === id && showAvatar &&
-         <div>
-          <AvatarForm
-            oldAvatar={this.state.photographer.avatar_filename}
-            changeAvatar={this.changeAvatar}
-            />
-        </div>}
+                />
+              )}
+            </div>
 
-        {/* SHOW/HIDE PROFILE */}
-        {backId === id && <div className="privacy">
-        <p>Hide profile?</p>
-        <input type="checkbox" checked={hidden} onChange={this.manageVisibility} />
-        </div>}
+            {/* CHANGE AVATAR  */}
+            {this.showHideAvatarButton()}
+            {backId === id && showAvatar && (
+              <div>
+                <AvatarForm
+                  oldAvatar={this.state.photographer.avatar_filename}
+                  changeAvatar={this.changeAvatar}
+                />
+              </div>
+            )}
 
+            {/* SHOW/HIDE PROFILE */}
+            {backId === id && (
+              <div className="privacy">
+                <p>Hide profile?</p>
+                <input
+                  type="checkbox"
+                  checked={hidden}
+                  onChange={this.manageVisibility}
+                />
+              </div>
+            )}
           </div>
         </div>
         {showForm && (
           <form className="photo-uploader" onSubmit={this.handleSubmit}>
-            <h4>You still have {6-hasAmountPhotos} more {(6-hasAmountPhotos === 1) ? 'photo' : 'photos'} to upload</h4>
+            <h4>
+              You still have {6 - hasAmountPhotos} more{" "}
+              {6 - hasAmountPhotos === 1 ? "photo" : "photos"} to upload
+            </h4>
             <input
               type="file"
               id="file"
               accept="image/png, image/jpeg, image/gif, image/jpg"
-              />
+            />
             <label htmlFor="photo-name">
               <input
                 type="text"
@@ -390,7 +434,7 @@ showHideAvatar = () => {
         {backId === id && messages && (
           <Messages messages={messages} markAsSeen={this.markAsSeen} />
         )}
-      </div>)
+      </div>
     );
   }
 }
