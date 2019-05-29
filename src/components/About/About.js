@@ -22,7 +22,7 @@ const About = () => {
           <h2>
             Are you a photographer that is looking for a place to be seen and possibly offered a job?! <br />
             Again, you are in the right place! <br />
-            Hurry up, grab an account till it's free, and start being noticed.
+            Hurry up, grab an account while it's free, and start being noticed.
           </h2>
         </div>
         <div>
