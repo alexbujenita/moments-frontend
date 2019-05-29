@@ -10,4 +10,23 @@
 
 .header p {
   padding: 0 10px;
+  margin: 4px;
+}
+
+.button {
+  margin-bottom: 4px;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background-color: #F2B95E;  
+  border-radius: 5px;
+  color: white;
+  padding: .25em;
+  text-decoration: none;
+}
+
+.button:focus,
+.button:hover {
+  background-color: #CA5310;
+  color: #F0E2A3;
 }

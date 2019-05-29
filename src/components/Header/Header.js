@@ -27,23 +27,24 @@ class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <Link to="/">
+        <Link className="button" to="/">
           <p>HOME</p>
         </Link>
-        <Link to="/discover">
+        <Link className="button" to="/discover">
           <p>Discover</p>
         </Link>
         {getToken() && (
-          <Link to="/">
+          <Link className="button" to="/">
             <p onClick={() => localStorage.clear()}>Logout</p>
           </Link>
         )}
 
         { getToken() && (
       <NavLink
+        className="button"
         exact
         to={`/photographer/${this.state.userId}`}
-        activeStyle={{color:"red"}}
+        activeStyle={{color:"black"}}
         >
         <p>My Profile</p>
       </NavLink>
