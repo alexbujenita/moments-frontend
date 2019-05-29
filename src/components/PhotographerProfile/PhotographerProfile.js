@@ -27,29 +27,36 @@ class PhotographerProfile extends Component {
     showEdit: false,
     showAvatar: false,
     isLoading: false,
-    hidden: false
+    hidden: false,
+    error: false
   };
 
   componentDidMount() {
-
     this.getCurrentUser();
 
     axios
       .get(`http://localhost:3000/users/${this.props.match.params.id}`)
       .then(resp => {
+        if (resp.data.error) {
+          this.props.history.push("/notfound");
+          return;
+        }
         this.setState(
           {
             photographer: resp.data,
             hasAmountPhotos: resp.data.photos.length,
             hidden: resp.data.hidden
-          }, () => {
+          },
+          () => {
             window.scrollTo(0, 0);
-            setTimeout(() =>{
-              if(resp.data.hidden && this.state.backId !== this.state.photographer.id ) {
-                this.props.history.push("/discover")
+            setTimeout(() => {
+              if (
+                resp.data.hidden &&
+                this.state.backId !== this.state.photographer.id
+              ) {
+                this.props.history.push("/discover");
               }
-
-            }, 150 )
+            }, 150);
           }
         );
       });
@@ -178,7 +185,7 @@ class PhotographerProfile extends Component {
           this.setState({
             backId: user.user_id
           });
-          return user.user_id
+          return user.user_id;
         })
         .catch(err => console.log(err));
     }
