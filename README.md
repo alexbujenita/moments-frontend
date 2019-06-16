@@ -20,9 +20,3 @@ I tried building an app with many features such as:
 * Use of validations on models
 * AWS file uploads from React
 * Personalised 404 page when incorrect address is typed
-
-The GIF below demonstrates the app from the user's point of view
-
-![](editgroup.gif)
-
-The GIF below demonstrates the app from the photographer's point of view
